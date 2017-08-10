@@ -1,0 +1,7 @@
+config BR2_PACKAGE_SMEM
+	bool "smem"
+	depends on BR2_PACKAGE_PYTHON
+	help 
+	 smem is a tool that can give numerous reports on memory usage on Linux systems
+
+	 https://www.selenic.com/smem/
