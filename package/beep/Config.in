@@ -1,0 +1,7 @@
+config BR2_PACKAGE_BEEP
+	bool "beep"
+	help 
+	 Play sounds from shell scripts
+
+	 http://johnath.com/beep/
+
