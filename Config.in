@@ -1,0 +1,2 @@
+source "$BR2_EXTERNAL_BARX_PATH/package/beep/Config.in"
+
