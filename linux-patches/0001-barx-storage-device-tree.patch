@@ -1,0 +1,12 @@
+--- linux-headers-4.9.6/arch/arm/boot/dts/vexpress-v2p-ca9.dts	2017-01-26 13:25:24.000000000 +0600
++++ vexpress-v2p-ca9.dts	2017-08-12 12:11:03.587648037 +0600
+@@ -372,4 +372,9 @@
+ 				<0 2 &gic 0 38 4>,
+ 				<0 3 &gic 0 39 4>;
+ 	};
++
++	barx-storage {
++		compatible = "barx,barx-storage";
++		size = <4096>; /* the size of storage in bytes */
++	};
+ };
