@@ -1,0 +1,6 @@
+config BR2_PACKAGE_STORAGE
+	bool "storage"
+	depends on BR2_LINUX_KERNEL
+	help 
+	 test driver implementing small storage
+
