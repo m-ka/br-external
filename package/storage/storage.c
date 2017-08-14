@@ -25,6 +25,14 @@ struct driver_data {
 };
 
 static void clean_up(struct device *dev, struct driver_data *d_data);
+static unsigned int of_get_size(struct device *dev);
+static int init_storage(struct platform_device *pdev);
+static int remove_storage(struct platform_device *pdev);
+static void clean_up(struct device *dev, struct driver_data *d_data);
+static loff_t storage_lseek(struct file *file, loff_t offset, int orig);
+static ssize_t storage_read(struct file *file, char *buff, size_t count, loff_t *off);
+static ssize_t storage_write(struct file *file, const char *buff, size_t count, loff_t *off);
+static int storage_release(struct inode *inode, struct file *file);
 
 static unsigned int of_get_size(struct device *dev)
 {
@@ -116,6 +124,7 @@ static void clean_up(struct device *dev, struct driver_data *d_data)
 {
 	if (d_data->device_created) {
 		cdev_del(&d_data->cdev);
+		sysfs_remove_group(&dev->kobj, &dev_attr_root_group);
 	}
 	if (MAJOR(d_data->dev_num))
 		unregister_chrdev_region(d_data->dev_num, 1);
@@ -149,7 +158,7 @@ static loff_t storage_lseek(struct file *file, loff_t offset, int orig)
 			new_pos = d_data->size - offset;
 			break;
 	}
-	if ((new_pos >= 0) && (new_pos < d_data->size))
+	if ((new_pos >= 0) && (new_pos <= d_data->size))
 		file->f_pos = new_pos;
 	else
 		new_pos = -EINVAL;
@@ -254,4 +263,4 @@ static struct platform_driver barx_storage = {
 module_platform_driver(barx_storage);
 
 MODULE_LICENSE("GPL");
-MODULE_DESCRIPTION("Test driver implementing small storage accessable as a char device");
+MODULE_DESCRIPTION("Test driver implementing small storage accessible as a char device");
